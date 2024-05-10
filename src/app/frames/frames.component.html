@@ -1,0 +1,401 @@
+<div class="container mx-auto bg-white p-10 rounded-md shadow-sm my-4">
+  <h2 class="text-xl font-bold text-gray-500">Add Frame</h2>
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label class="form-control w-full max-w-xs">
+          <div class="label">
+            <span class="label-text">Select post language</span>
+          </div>
+          <select
+            class="select select-bordered bg-gray-50"
+            [(ngModel)]="language"
+          >
+            <option disabled selected value="n">Pick one</option>
+            <option
+              *ngFor="let lang of langg; let i = index"
+              [value]="lang._id"
+            >
+              {{ lang.language }}
+            </option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <!-- <div class="flex mt-10 gap-7">
+    <div class="">
+      <div class="label">
+        <span class="label-text">Select Image Size</span>
+      </div>
+      <select
+        class="select select-bordered bg-gray-50"
+        name=""
+        id=""
+        title="select image size"
+        [(ngModel)]="size"
+        (change)="setSize()"
+      >
+        <option
+          *ngFor="let option of canvasSizeOptions; let i = index"
+          [value]="i"
+        >
+          {{ option.width }} x {{ option.height }}
+        </option>
+      </select>
+    </div>
+
+    <div class="border-2 max-w-min rounded-md border-slate-950">
+      <canvas #canvasElement></canvas>
+    </div>
+  </div> -->
+  <hr class="mt-6 border-b-1 border-blueGray-300" />
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Upload Frame
+        </label>
+        <input
+          type="file"
+          class="file-input file-input-bordered file-input-md w-full"
+          (change)="addFile($event)"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+        Title
+      </h6> -->
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Frame name
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Question."
+          [(ngModel)]="frameName"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+        Title
+      </h6> -->
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Description
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Question."
+          [(ngModel)]="description"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Upload Tumbnail
+        </label>
+        <input
+          type="file"
+          class="file-input file-input-bordered file-input-md w-full"
+          (change)="addTumb($event)"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Upload Reference Image
+        </label>
+        <input
+          type="file"
+          class="file-input file-input-bordered file-input-md w-full"
+          (change)="addreff($event)"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+  <div class="mx-10 px-3">
+    <select class="select select-bordered bg-gray-50" [(ngModel)]="isActive">
+      <option disabled selected value="n">Pick one</option>
+      <option value="false">Draft</option>
+      <option value="true">Publish</option>
+    </select>
+    <button
+      *ngIf="!showUpdateButton"
+      class="w-full bg-slate-800 text-white py-3 my-3 rounded-md"
+      (click)="submit()"
+    >
+      Submit
+    </button>
+    <ng-container *ngIf="showUpdateButton">
+      <button class="w-full bg-slate-800 text-white py-3 my-1 rounded-md">
+        Update
+      </button>
+      <button class="w-full bg-red-600 text-white py-3 my-1 rounded-md">
+        Close
+      </button>
+    </ng-container>
+  </div>
+
+  <div class="bg-white shadow rounded-sm my-2.5 overflow-x-auto">
+    <table class="min-w-max w-full table-auto">
+      <thead>
+        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+          <th class="py-3 px-5 text-left">_id</th>
+          <th class="py-3 px-5 text-left">title</th>
+
+          <th class="py-3 px-5 text-center">action</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-600 text-sm">
+        <tr
+          *ngFor="let da of data; let i = index"
+          class="border-b border-gray-200 hover:bg-gray-100 first-letter:uppercase"
+        >
+          <td class="py-3 px-6 text-left whitespace-nowrap">
+            {{ da._id }}
+          </td>
+          <td class="py-3 px-6 text-left first-letter:uppercase">
+            {{ da.frameName }}
+          </td>
+
+          <td
+            class="py-3 px-5 text-left flex gap-5 justify-center align-items-lg-center"
+          >
+            <i
+              (click)="delete(da._id)"
+              class="text-red-500 bi cursor-pointer bi-trash-fill"
+            ></i>
+            <i class="text-teal-500 bi bi-pencil-square cursor-pointer"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- <div class="flex mt-10 gap-7">
+  <div class="">
+    Select Image Size <br />
+    <select
+      name=""
+      id=""
+      title="select image size"
+      [(ngModel)]="size"
+      (change)="setSize()"
+    >
+      <option
+        *ngFor="let option of canvasSizeOptions; let i = index"
+        [value]="i"
+      >
+        {{ option.width }} x {{ option.height }}
+      </option>
+    </select>
+  </div>
+
+  <div class="border-2 max-w-min rounded-md border-slate-950">
+    <canvas #canvasElement></canvas>
+  </div>
+</div>
+
+<div class="flex">
+  <img *ngIf="resIma" [src]="resIma" alt="" srcset="" />
+</div>
+<p>
+  Enter name of the frame english:
+  <input type="text" [(ngModel)]="frameName" placeholder="enter" />
+</p>
+
+<p *ngFor="let ti of Title; let i = index">
+  Enter name in {{ ti.lang }} language:
+  <input type="text" name="" id="title{{ i }}" [(ngModel)]="Title[i].text" />
+</p>
+<input type="file" (change)="handleFileInput($event)" accept="image/*" />
+<button class="px-3 py-2 rounded-sm mx-3 bg-teal-200" (click)="addSquare()">
+  Add Square
+</button>
+
+<div *ngFor="let sq of squares; let i = index" class="flex">
+  <p>User {{ i }}</p>
+  <i
+    (click)="removeSquare(i)"
+    class="text-red-500 px-3 bi cursor-pointer bi-trash-fill"
+  ></i>
+</div>
+
+<div class="flex flex-col w-80">
+  <input
+    *ngFor="let text of texts_container; let i = index; trackBy: trackByFn"
+    type="text"
+    [(ngModel)]="texts_container[i]"
+    required
+    class="min-w-0 flex-auto rounded-md border-0 px-3.5 py-2 text-black shadow-sm ring-1 ring-inset ring-black/5 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+    placeholder="Enter text"
+  />
+  <button
+    class="px-3 py-2 rounded-sm mx-3 bg-teal-200"
+    (click)="addTextBox(); texts_container.push('')"
+  >
+    Add text
+  </button>
+</div>
+
+<button
+  *ngIf="!showUpdateButton"
+  (click)="submit()"
+  class="px-4 py-2 m-3 bg-teal-500 rounded-md text-white"
+>
+  submit
+</button>
+
+<ng-container *ngIf="showUpdateButton">
+  <button
+    (click)="update()"
+    class="px-4 py-2 m-3 rounded-md text-white mx-5 bg-teal-600"
+  >
+    update
+  </button>
+  <button class="px-4 py-2 rounded-md bg-red-600 text-white" (click)="close()">
+    close
+  </button>
+</ng-container>
+-->
+<!-- <table [border]="1">
+  <tr>
+    <th>frame name</th>
+    <th>frame url</th>
+    <th>likes</th>
+    <th>shares</th>
+    <th>comment</th>
+    <th>Action</th>
+    <th>Action</th>
+    <th>Action</th>
+    <th>Action</th>
+    <th>Action</th>
+  </tr>
+  <tr *ngFor="let frame of data; let i = index">
+    <td>{{ frame.frameName }}</td>
+    <td>{{ frame.frameUrl }}</td>
+
+    <td>
+      <p *ngFor="let like of frame.likes">{{ like }}</p>
+    </td>
+    <th>{{ frame.shares }}</th>
+    <th>
+      <p *ngFor="let comment of frame.comments">{{ comment.text }}</p>
+    </th>
+
+    <td>
+      <button
+        class="rounded-md bg-teal-400 px-4 py-2"
+        (click)="like(frame._id)"
+      >
+        like
+      </button>
+    </td>
+    <th>
+      <button
+        class="rounded-md bg-teal-400 px-4 py-2"
+        (click)="share(frame._id)"
+      >
+        share
+      </button>
+    </th>
+    <th>
+      <input
+        type="text"
+        [(ngModel)]="comment[i]"
+        placeholder="enter comment"
+      /><button
+        class="rounded-md bg-teal-400 px-4 py-2"
+        (click)="comm(frame._id, i)"
+      >
+        comment
+      </button>
+    </th>
+    <td>
+      <button
+        class="rounded-md bg-teal-400 px-4 py-2"
+        (click)="setupload(frame)"
+      >
+        Upload
+      </button>
+    </td>
+    <td>
+      <i
+        (click)="delete(frame._id)"
+        class="text-red-500 px-3 bi cursor-pointer bi-trash-fill"
+      ></i>
+      <i
+        class="text-teal-500 px-3 cursor-pointer bi bi-pencil-square"
+        (click)="showUpdate(frame)"
+      ></i>
+    </td>
+  </tr>
+</table>
+
+<div *ngIf="showUpload" class="m-10">
+  <ng-container *ngFor="let upload of showUpload.coordinates; let i = index">
+    <p>
+      upload image {{ i + 1 }}:
+      <input type="file" (change)="addImageFile($event, i)" />
+    </p>
+  </ng-container>
+  <p class="mt-5" *ngFor="let n of resTexts; let i = index">
+    Enter statement {{ i + 1 }} :<br />
+
+    <ng-container *ngFor="let m of n.text; let j = index; trackBy: trackByFn">
+      Enter name {{ j + 1 }}:
+      <input
+        class="border border-black"
+        type="text"
+        [(ngModel)]="resTexts[i].text[j]"
+      /><br />
+    </ng-container>
+  </p>
+
+  <button
+    class="rounded-md bg-teal-700 text-white"
+    (click)="uloadImage(showUpload._id)"
+  >
+    Submit
+  </button>
+</div> -->

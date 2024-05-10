@@ -1,0 +1,70 @@
+<table class="table-auto border-collapse border border-slate-500">
+  <thead>
+    <th>user</th>
+    <th>description</th>
+    <th>category</th>
+    <th>sub category</th>
+    <th>imageUrl</th>
+    <th>likes</th>
+    <th>shares</th>
+    <th>comments</th>
+    <th>action</th>
+    <th>action</th>
+    <th>action</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let po of post; let i = index">
+      <td>{{ po.user }}</td>
+      <td>{{ po.description }}</td>
+      <td>{{ po.category }}</td>
+      <td>{{ po.type }}</td>
+      <td>
+        <a href="{{ po.imageUrl }}" target="_blank">{{ po.imageUrl }}</a>
+      </td>
+      <td>{{ po.likes.length }}</td>
+      <td>{{ po.shares }}</td>
+      <td>
+        <p *ngFor="let com of po.comments">{{ com.text }}</p>
+      </td>
+      <td><button (click)="like(po._id)">Like</button></td>
+      <td><button (click)="share(po._id)">share</button></td>
+      <th>
+        <input type="text" [(ngModel)]="comment[i]" placeholder="enter comment" /><button
+          (click)="comm(po._id, i)">comment</button>
+      </th>
+    </tr>
+  </tbody>
+</table>
+
+<h1>{{ category }}</h1>
+
+<div style="margin-top: 5rem">
+  <h1>upload post</h1>
+  <p>
+    Enter title in english:
+    <input type="text" name="" id="title" [(ngModel)]="title" />
+  </p>
+  <p>
+    Enter discription in english:
+    <input type="text" name="" id="des" [(ngModel)]="description" />
+  </p>
+
+  <p *ngFor="let ti of Title; let i = index">
+    Enter title in {{ ti.lang }} language:
+    <input type="text" name="" id="title{{ i }}" [(ngModel)]="Title[i].text" />
+  </p>
+  <p *ngFor="let dis of Discription; let i = index">
+    Enter discription in {{ dis.lang }} language:
+    <input type="text" name="" id="des{{ i }}" [(ngModel)]="Discription[i].text" />
+  </p>
+  <p>
+    select type
+    <select name="type" id="t" title="select type" [(ngModel)]="type">
+      <option value="new">new</option>
+      <option value="trending">trending</option>
+      <!-- <option value="fun filter">fun filter</option> -->
+    </select>
+  </p>
+  <input type="file" (change)="onFileSelected($event)" />
+  <button (click)="uploadImage()">Upload Image</button>
+</div>
